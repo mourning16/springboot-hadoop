@@ -21,11 +21,10 @@ public class HdfsDemoController {
 
     @RequestMapping("hdfsDemo")
     public void hdfsDemo(){
-        boolean flag = hdfsTemplate.existDir("/hadoop-2.8.4.tar.gz",false);
-        //hdfsTemplate.copyFileToHDFS("");
-
-
-        log.info("是否存在该文件：{}",flag);
+        //将一个本地的文件上传到搭建的hadoop集群上面
+        hdfsTemplate.copyFileToHDFS(false,false,"H:\\123.txt","/demo/123.txt");
+        boolean flag = hdfsTemplate.existDir("/demo",false);
+        log.info("是否存在此路径：{}" ,flag);
     }
 
 }
