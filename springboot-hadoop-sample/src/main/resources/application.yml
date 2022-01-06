@@ -1,0 +1,3 @@
+hadoop:
+  name-node: hdfs://39.103.163.4:9000
+  namespace: /

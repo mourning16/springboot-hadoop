@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.com.soft.hadoopstarter.configurations.HadoopConfiguration,\
+  cn.com.soft.hadoopstarter.template.HdfsTemplate
