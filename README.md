@@ -1,0 +1,2 @@
+# springboot-hadoop
+特别注意的是，在windows本地连接远程hadoop集群的时候也需要在本地搭建hadoop环境；
