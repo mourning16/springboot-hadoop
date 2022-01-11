@@ -1,7 +1,6 @@
 package cn.com.soft.hadoopmr.flowsort;
 
 import java.io.IOException;
-
 import cn.com.soft.hadoopmr.flowsum.FlowBean;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
@@ -19,8 +18,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * 对输出的数据进行排序
  */
 public class SortMR {
-
-
+	
 	public static class SortMapper extends Mapper<LongWritable, Text, FlowBean, NullWritable> {
 
 		//拿到一行数据，切分出各字段，封装为一个flowbean，作为key输出
@@ -39,11 +37,7 @@ public class SortMR {
 			context.write(new FlowBean(phoneNB, u_flow, d_flow), NullWritable.get());
 
 		}
-
-
 	}
-
-
 
 	public static class SortReducer extends Reducer<FlowBean, NullWritable, Text, FlowBean> {
 
@@ -53,12 +47,8 @@ public class SortMR {
 
 			String phoneNB = key.getPhoneNB();
 			context.write(new Text(phoneNB), key);
-
 		}
-
 	}
-
-
 
 	public static void main(String[] args) throws Exception {
 
@@ -82,8 +72,5 @@ public class SortMR {
 		System.exit(job.waitForCompletion(true)?0:1);
 
 	}
-
-
-
 
 }
