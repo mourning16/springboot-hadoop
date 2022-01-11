@@ -1,4 +1,4 @@
-package cn.com.soft.hadoopwordcount.wordcount;
+package cn.com.soft.hadoopmr.wordcount;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -13,8 +13,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * 比如，该作业使用哪个类作为逻辑处理中的map，哪个作为reduce
  * 还可以指定该作业要处理的数据所在的路径
  * 还可以指定改作业输出的结果放到哪个路径
- * ....
- * @author duanhaitao@itcast.cn
+ * ...
  *
  */
 public class WCRunner {

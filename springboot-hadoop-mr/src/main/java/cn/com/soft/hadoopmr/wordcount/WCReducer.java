@@ -1,4 +1,4 @@
-package cn.com.soft.hadoopwordcount.wordcount;
+package cn.com.soft.hadoopmr.wordcount;
 
 import java.io.IOException;
 import org.apache.hadoop.io.LongWritable;
