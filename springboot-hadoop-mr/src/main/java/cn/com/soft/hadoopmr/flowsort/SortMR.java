@@ -18,7 +18,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * 对输出的数据进行排序
  */
 public class SortMR {
-	
+
 	public static class SortMapper extends Mapper<LongWritable, Text, FlowBean, NullWritable> {
 
 		//拿到一行数据，切分出各字段，封装为一个flowbean，作为key输出
