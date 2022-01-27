@@ -8,6 +8,7 @@ import org.apache.hadoop.ipc.RPC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
@@ -25,15 +26,15 @@ public class HdfsDemoController {
     HdfsTemplate hdfsTemplate;
 
     @RequestMapping("hdfsDemo")
-    public void hdfsDemo(){
+    public void hdfsDemo() {
         //将一个本地的文件上传到搭建的hadoop集群上面
-        hdfsTemplate.copyFileToHDFS(false,false,"H:\\123.txt","/demo/123.txt");
-        boolean flag = hdfsTemplate.existDir("/demo",false);
-        log.info("是否存在此路径：{}" ,flag);
+        hdfsTemplate.copyFileToHDFS(false, false, "H:\\123.txt", "/demo/123.txt");
+        boolean flag = hdfsTemplate.existDir("/demo", false);
+        log.info("是否存在此路径：{}", flag);
     }
 
     @RequestMapping("rpcDemo")
-    public void rpcDemo(){
+    public void rpcDemo() {
 
         HelloHadoopRpcService proxy = null;
         try {

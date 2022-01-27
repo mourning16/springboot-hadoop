@@ -11,35 +11,35 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 //这是job描述和提交类的规范写法
-public class FlowSumRunner extends Configured implements Tool{
+public class FlowSumRunner extends Configured implements Tool {
 
-	@Override
-	public int run(String[] args) throws Exception {
+    @Override
+    public int run(String[] args) throws Exception {
 
-		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf);
+        Configuration conf = new Configuration();
+        Job job = Job.getInstance(conf);
 
-		job.setJarByClass(FlowSumRunner.class);
+        job.setJarByClass(FlowSumRunner.class);
 
-		job.setMapperClass(FlowSumMapper.class);
-		job.setReducerClass(FlowSumReducer.class);
+        job.setMapperClass(FlowSumMapper.class);
+        job.setReducerClass(FlowSumReducer.class);
 
-		job.setMapOutputKeyClass(Text.class);
-		job.setMapOutputValueClass(FlowBean.class);
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(FlowBean.class);
 
-		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(FlowBean.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(FlowBean.class);
 
-		FileInputFormat.setInputPaths(job, new Path(args[0]));
-		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+        FileInputFormat.setInputPaths(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-		return job.waitForCompletion(true)?0:1;
-	}
+        return job.waitForCompletion(true) ? 0 : 1;
+    }
 
 
-	public static void main(String[] args) throws Exception {
-		int res = ToolRunner.run(new Configuration(), new FlowSumRunner(), args);
-		System.exit(res);
-	}
+    public static void main(String[] args) throws Exception {
+        int res = ToolRunner.run(new Configuration(), new FlowSumRunner(), args);
+        System.exit(res);
+    }
 
 }

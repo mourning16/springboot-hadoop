@@ -6,6 +6,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.hdfs.DistributedFileSystem;
 import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
+
 import java.io.IOException;
 import java.net.URI;
 
@@ -20,7 +21,8 @@ public class HdfsUtils {
 
     /**
      * 获取文件系统
-     * @param hdfsUri  nameNode地址 如"hdfs://10.10.1.142:9000"
+     *
+     * @param hdfsUri nameNode地址 如"hdfs://10.10.1.142:9000"
      * @return
      */
     private static FileSystem getFileSystem(String hdfsUri) {
@@ -28,18 +30,18 @@ public class HdfsUtils {
         Configuration conf = new Configuration();
         // 文件系统
         FileSystem fs = null;
-        if(StringUtils.isBlank(hdfsUri)){
+        if (StringUtils.isBlank(hdfsUri)) {
             // 返回默认文件系统  如果在 Hadoop集群下运行，使用此种方法可直接获取默认文件系统
             try {
                 fs = FileSystem.get(conf);
             } catch (IOException e) {
                 log.error("", e);
             }
-        }else{
+        } else {
             // 返回指定的文件系统,如果在本地测试，需要使用此种方法获取文件系统
             try {
                 URI uri = new URI(hdfsUri.trim());
-                fs = FileSystem.get(uri,conf);
+                fs = FileSystem.get(uri, conf);
             } catch (Exception e) {
                 log.error("", e);
             }
@@ -57,7 +59,7 @@ public class HdfsUtils {
         try {
             // 获取文件系统
             FileSystem fs = getFileSystem(hdfsUri);
-            if(StringUtils.isNotBlank(hdfsUri)){
+            if (StringUtils.isNotBlank(hdfsUri)) {
                 path = hdfsUri + path;
             }
             // 创建目录
@@ -74,15 +76,15 @@ public class HdfsUtils {
      *
      * @param path
      */
-    public static void rmdir(String hdfsUri,String path) {
+    public static void rmdir(String hdfsUri, String path) {
         try {
             // 返回FileSystem对象
             FileSystem fs = getFileSystem(hdfsUri);
-            if(StringUtils.isNotBlank(hdfsUri)){
+            if (StringUtils.isNotBlank(hdfsUri)) {
                 path = hdfsUri + path;
             }
             // 删除文件或者文件目录  delete(Path f) 此方法已经弃用
-            fs.delete(new Path(path),true);
+            fs.delete(new Path(path), true);
             // 释放资源
             fs.close();
         } catch (IllegalArgumentException | IOException e) {
@@ -103,24 +105,24 @@ public class HdfsUtils {
             // 返回FileSystem对象
             FileSystem fs = getFileSystem(hdfsUri);
 
-            if(StringUtils.isNotBlank(hdfsUri)){
+            if (StringUtils.isNotBlank(hdfsUri)) {
                 path = hdfsUri + path;
             }
 
             FileStatus[] status;
-            if(pathFilter != null){
+            if (pathFilter != null) {
                 // 根据filter列出目录内容
-                status = fs.listStatus(new Path(path),pathFilter);
-            }else{
+                status = fs.listStatus(new Path(path), pathFilter);
+            } else {
                 // 列出目录内容
                 status = fs.listStatus(new Path(path));
             }
             // 获取目录下的所有文件路径
             Path[] listedPaths = FileUtil.stat2Paths(status);
             // 转换String[]
-            if (listedPaths != null && listedPaths.length > 0){
+            if (listedPaths != null && listedPaths.length > 0) {
                 files = new String[listedPaths.length];
-                for (int i = 0; i < files.length; i++){
+                for (int i = 0; i < files.length; i++) {
                     files[i] = listedPaths[i].toString();
                 }
             }
@@ -134,18 +136,19 @@ public class HdfsUtils {
 
     /**
      * 文件上传至 HDFS
+     *
      * @param hdfsUri
-     * @param delSrc       指是否删除源文件，true为删除，默认为false
+     * @param delSrc    指是否删除源文件，true为删除，默认为false
      * @param overwrite
-     * @param srcFile      源文件，上传文件路径
-     * @param destPath     hdfs的目的路径
+     * @param srcFile   源文件，上传文件路径
+     * @param destPath  hdfs的目的路径
      */
-    public static void copyFileToHDFS(String hdfsUri,boolean delSrc, boolean overwrite,String srcFile,String destPath) {
+    public static void copyFileToHDFS(String hdfsUri, boolean delSrc, boolean overwrite, String srcFile, String destPath) {
         // 源文件路径是Linux下的路径，如果在 windows 下测试，需要改写为Windows下的路径，比如D://hadoop/djt/weibo.txt
         Path srcPath = new Path(srcFile);
 
         // 目的路径
-        if(StringUtils.isNotBlank(hdfsUri)){
+        if (StringUtils.isNotBlank(hdfsUri)) {
             destPath = hdfsUri + destPath;
         }
         Path dstPath = new Path(destPath);
@@ -154,7 +157,7 @@ public class HdfsUtils {
             // 获取FileSystem对象
             FileSystem fs = getFileSystem(hdfsUri);
             fs.copyFromLocalFile(srcPath, dstPath);
-            fs.copyFromLocalFile(delSrc,overwrite,srcPath, dstPath);
+            fs.copyFromLocalFile(delSrc, overwrite, srcPath, dstPath);
             //释放资源
             fs.close();
         } catch (IOException e) {
@@ -168,9 +171,9 @@ public class HdfsUtils {
      * @param srcFile
      * @param destPath 文件下载后,存放地址
      */
-    public static void getFile(String hdfsUri, String srcFile,String destPath) {
+    public static void getFile(String hdfsUri, String srcFile, String destPath) {
         // 源文件路径
-        if(StringUtils.isNotBlank(hdfsUri)){
+        if (StringUtils.isNotBlank(hdfsUri)) {
             srcFile = hdfsUri + srcFile;
         }
         Path srcPath = new Path(srcFile);
@@ -199,7 +202,7 @@ public class HdfsUtils {
             // 返回FileSystem对象
             FileSystem fs = getFileSystem(hdfsUri);
             // 获取分布式文件系统
-            DistributedFileSystem hdfs = (DistributedFileSystem)fs;
+            DistributedFileSystem hdfs = (DistributedFileSystem) fs;
             dataNodeStats = hdfs.getDataNodeStats();
         } catch (IOException e) {
             log.error("", e);
@@ -215,7 +218,7 @@ public class HdfsUtils {
      */
     public static BlockLocation[] getFileBlockLocations(String hdfsUri, String filePath) {
         // 文件路径
-        if(StringUtils.isNotBlank(hdfsUri)){
+        if (StringUtils.isNotBlank(hdfsUri)) {
             filePath = hdfsUri + filePath;
         }
         Path path = new Path(filePath);
@@ -238,30 +241,31 @@ public class HdfsUtils {
 
     /**
      * 判断目录是否存在
+     *
      * @param hdfsUri
      * @param filePath
      * @param create
      * @return
      */
-    public boolean existDir(String hdfsUri,String filePath, boolean create){
+    public boolean existDir(String hdfsUri, String filePath, boolean create) {
         boolean flag = false;
 
-        if (StringUtils.isEmpty(filePath)){
+        if (StringUtils.isEmpty(filePath)) {
             return flag;
         }
-        try{
+        try {
             Path path = new Path(filePath);
             // FileSystem对象
             FileSystem fs = getFileSystem(hdfsUri);
-            if (create){
-                if (!fs.exists(path)){
+            if (create) {
+                if (!fs.exists(path)) {
                     fs.mkdirs(path);
                 }
             }
-            if (fs.isDirectory(path)){
+            if (fs.isDirectory(path)) {
                 flag = true;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("", e);
         }
 

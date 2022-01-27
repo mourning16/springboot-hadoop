@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import java.net.URI;
 
 /**
@@ -14,7 +15,7 @@ import java.net.URI;
  * @Date 2022/1/6 10:25
  * @Version 1.0
  */
-@ConditionalOnProperty(name="hadoop.name-node")
+@ConditionalOnProperty(name = "hadoop.name-node")
 @Configuration
 @Slf4j
 public class HadoopConfiguration {
@@ -28,10 +29,11 @@ public class HadoopConfiguration {
      * 分别是hdfs-site.xml以及core-site.xml，这两个文件中会有访问hdfs所需的参数值，
      * 主要是fs.default.name，指定了hdfs的地址，有了这个地址客户端就可以通过这个地址访问hdfs了。
      * 即可理解为configuration就是hadoop中的配置信息。
+     *
      * @return
      */
     @Bean("fileSystem")
-    public FileSystem createFs() throws Exception{
+    public FileSystem createFs() throws Exception {
         //读取配置文件
         org.apache.hadoop.conf.Configuration conf = new org.apache.hadoop.conf.Configuration();
         //nameNode = "hdfs://39.103.163.4:9000";
@@ -45,11 +47,11 @@ public class HadoopConfiguration {
             URI uri = new URI(nameNode.trim());
             //指定访问hdfs的客户端身份
             log.info("连接参数：" + uri.toString());
-            fs = FileSystem.get(uri,conf,"root");
+            fs = FileSystem.get(uri, conf, "root");
         } catch (Exception e) {
             log.error("", e);
         }
-        return  fs;
+        return fs;
     }
 
 }

@@ -9,7 +9,7 @@ package cn.com.soft.hadooprpcinterface.service;
 
 public interface HelloHadoopRpcService {
 
-    public static final long versionID=1L;
+    public static final long versionID = 1L;
 
     public String sayHelloHadoop(String sayStr);
 

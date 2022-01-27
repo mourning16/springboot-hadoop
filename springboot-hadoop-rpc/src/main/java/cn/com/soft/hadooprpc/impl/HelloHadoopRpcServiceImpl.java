@@ -13,7 +13,7 @@ public class HelloHadoopRpcServiceImpl implements HelloHadoopRpcService {
 
     @Override
     public String sayHelloHadoop(String sayStr) {
-        return  "Hi~~,我已经接到你传来的话术：" + sayStr;
+        return "Hi~~,我已经接到你传来的话术：" + sayStr;
     }
-    
+
 }

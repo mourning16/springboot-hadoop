@@ -15,8 +15,8 @@ class SpringbootHadoopSampleApplicationTests {
 
     @Test
     void contextLoads() {
-        boolean flag = hdfsTemplate.existDir("hadoop-2.8.4.tar.gz",false);
-       log.info("是否存在该文件：{}",flag);
+        boolean flag = hdfsTemplate.existDir("hadoop-2.8.4.tar.gz", false);
+        log.info("是否存在该文件：{}", flag);
     }
 
 }

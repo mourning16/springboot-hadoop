@@ -6,6 +6,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.ipc.RPC.Server;
 import org.apache.hadoop.ipc.RPC.Builder;
+
 import java.io.IOException;
 
 /**
@@ -32,7 +33,6 @@ public class RpcHandler {
         }
 
     }
-
 
 
 }

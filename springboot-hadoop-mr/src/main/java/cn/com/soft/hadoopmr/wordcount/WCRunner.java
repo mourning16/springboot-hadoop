@@ -14,42 +14,41 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * 还可以指定该作业要处理的数据所在的路径
  * 还可以指定改作业输出的结果放到哪个路径
  * ...
- *
  */
 public class WCRunner {
 
-	public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
 
-		Configuration conf = new Configuration();
+        Configuration conf = new Configuration();
 
-		Job wcjob = Job.getInstance(conf);
+        Job wcjob = Job.getInstance(conf);
 
-		//设置整个job所用的那些类在哪个jar包
-		wcjob.setJarByClass(WCRunner.class);
+        //设置整个job所用的那些类在哪个jar包
+        wcjob.setJarByClass(WCRunner.class);
 
 
-		//本job使用的mapper和reducer的类
-		wcjob.setMapperClass(WCMapper.class);
-		wcjob.setReducerClass(WCReducer.class);
+        //本job使用的mapper和reducer的类
+        wcjob.setMapperClass(WCMapper.class);
+        wcjob.setReducerClass(WCReducer.class);
 
-		//指定reduce的输出数据kv类型
-		wcjob.setOutputKeyClass(Text.class);
-		wcjob.setOutputValueClass(LongWritable.class);
+        //指定reduce的输出数据kv类型
+        wcjob.setOutputKeyClass(Text.class);
+        wcjob.setOutputValueClass(LongWritable.class);
 
-		//指定mapper的输出数据kv类型
-		wcjob.setMapOutputKeyClass(Text.class);
-		wcjob.setMapOutputValueClass(LongWritable.class);
+        //指定mapper的输出数据kv类型
+        wcjob.setMapOutputKeyClass(Text.class);
+        wcjob.setMapOutputValueClass(LongWritable.class);
 
-		//指定要处理的输入数据存放路径
-		FileInputFormat.setInputPaths(wcjob, new Path("hdfs://X.X.X.X:9000/wc/srcdata/"));
+        //指定要处理的输入数据存放路径
+        FileInputFormat.setInputPaths(wcjob, new Path("hdfs://X.X.X.X:9000/wc/srcdata/"));
 
-		//指定处理结果的输出数据存放路径
-		FileOutputFormat.setOutputPath(wcjob, new Path("hdfs://X.X.X.X:9000/wc/output3/"));
+        //指定处理结果的输出数据存放路径
+        FileOutputFormat.setOutputPath(wcjob, new Path("hdfs://X.X.X.X:9000/wc/output3/"));
 
-		//将job提交给集群运行
-		wcjob.waitForCompletion(true);
+        //将job提交给集群运行
+        wcjob.waitForCompletion(true);
 
-	}
+    }
 
 
 }
